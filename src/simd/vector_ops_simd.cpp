@@ -24,7 +24,8 @@ void vector_add_simd(const float* a,
         const __m256 vb = _mm256_loadu_ps(b + i);
 
         // Add the 8 pairs of floats in parallel.
-        // result is const because it is only stored, not modified afterward.
+        // A new result is created on each loop iteration.
+        // const only prevents reassignment within the current iteration.
         const __m256 result = _mm256_add_ps(va, vb);
 
         // Store the 8 computed floats into out starting at index i.

@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.20)
 project(accelerated_computing LANGUAGES CXX)
 
 option(ENABLE_SIMD "Build SIMD implementations" ON)
+option(ENABLE_TESTS "Build tests" ON)
+option(ENABLE_BENCHMARKS "Build benchmarks" ON)
 
 add_library(accelerated_computing
     src/cpu/vector_ops_cpu.cpp
@@ -48,3 +50,16 @@ target_link_libraries(vector_add_example
     PRIVATE
         accelerated_computing
 )
+
+if(ENABLE_TESTS OR ENABLE_BENCHMARKS)
+    include(FetchContent)
+endif()
+
+if(ENABLE_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
+
+if(ENABLE_BENCHMARKS)
+    add_subdirectory(benchmarks)
+endif()
