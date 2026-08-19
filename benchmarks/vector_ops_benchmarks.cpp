@@ -51,6 +51,13 @@ void vector_add_simd_benchmark(benchmark::State& state)
     benchmark_vector_add(state, Backend::Simd);
 }
 #endif
+
+#ifdef ENABLE_CUDA
+void vector_add_cuda_benchmark(benchmark::State& state)
+{
+    benchmark_vector_add(state, Backend::Cuda);
+}
+#endif
 }
 
 // Register the CPU benchmark.
@@ -62,6 +69,13 @@ BENCHMARK(vector_add_cpu_benchmark)
 #ifdef ENABLE_SIMD
 // Register the SIMD benchmark with the same sizes as CPU for comparison.
 BENCHMARK(vector_add_simd_benchmark)
+    ->Arg(1024)
+    ->Arg(1024 * 1024);
+#endif
+
+#ifdef ENABLE_CUDA
+// Register the CUDA benchmark with the same sizes as CPU/SIMD for comparison.
+BENCHMARK(vector_add_cuda_benchmark)
     ->Arg(1024)
     ->Arg(1024 * 1024);
 #endif

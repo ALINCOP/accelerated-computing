@@ -30,5 +30,16 @@ int main()
     std::cout << '\n';
 #endif
 
+#ifdef ENABLE_CUDA
+    vector_add(Backend::Cuda, a.data(), b.data(), out.data(), out.size());
+
+    std::cout << "CUDA: ";
+    for (float value : out)
+    {
+        std::cout << value << ' ';
+    }
+    std::cout << '\n';
+#endif
+
     return 0;
 }

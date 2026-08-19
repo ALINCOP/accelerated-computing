@@ -72,3 +72,28 @@ TEST(VectorAddSimd, MatchesCpuForImportantSizes)
     }
 }
 #endif
+
+#ifdef ENABLE_CUDA
+TEST(VectorAddCuda, MatchesCpuForImportantSizes)
+{
+    // These sizes cover tiny inputs, one CUDA block, and multiple CUDA blocks.
+    const std::vector<std::size_t> sizes{0, 1, 5, 256, 257, 1024, 1027};
+
+    for (std::size_t size : sizes)
+    {
+        const std::vector<float> a = make_test_vector(size, 1.0f);
+        const std::vector<float> b = make_test_vector(size, 100.0f);
+
+        std::vector<float> cpu_out(size);
+        std::vector<float> cuda_out(size);
+
+        // CPU is the reference result.
+        vector_add(Backend::Cpu, a.data(), b.data(), cpu_out.data(), size);
+
+        // CUDA should produce the same result as CPU.
+        vector_add(Backend::Cuda, a.data(), b.data(), cuda_out.data(), size);
+
+        expect_vectors_near(cpu_out, cuda_out, 1e-5f);
+    }
+}
+#endif

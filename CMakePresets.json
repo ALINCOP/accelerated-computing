@@ -9,6 +9,22 @@
       "binaryDir": "${sourceDir}/build/vs2022-x64",
       "cacheVariables": {
         "ENABLE_SIMD": "ON",
+        "ENABLE_CUDA": "OFF",
+        "ENABLE_TESTS": "ON",
+        "ENABLE_BENCHMARKS": "ON"
+      }
+    },
+    {
+      "name": "vs2022-x64-cuda",
+      "displayName": "Visual Studio 2022 x64 CUDA",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "toolset": "cuda=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.8",
+      "binaryDir": "${sourceDir}/build/vs2022-x64-cuda",
+      "cacheVariables": {
+        "ENABLE_SIMD": "ON",
+        "ENABLE_CUDA": "ON",
+        "CMAKE_CUDA_ARCHITECTURES": "89",
         "ENABLE_TESTS": "ON",
         "ENABLE_BENCHMARKS": "ON"
       }
@@ -26,6 +42,18 @@
       "displayName": "Release",
       "configurePreset": "vs2022-x64",
       "configuration": "Release"
+    },
+    {
+      "name": "cuda-debug",
+      "displayName": "CUDA Debug",
+      "configurePreset": "vs2022-x64-cuda",
+      "configuration": "Debug"
+    },
+    {
+      "name": "cuda-release",
+      "displayName": "CUDA Release",
+      "configurePreset": "vs2022-x64-cuda",
+      "configuration": "Release"
     }
   ],
   "testPresets": [
@@ -42,6 +70,24 @@
       "name": "release",
       "displayName": "Release Tests",
       "configurePreset": "vs2022-x64",
+      "configuration": "Release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "cuda-debug",
+      "displayName": "CUDA Debug Tests",
+      "configurePreset": "vs2022-x64-cuda",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "cuda-release",
+      "displayName": "CUDA Release Tests",
+      "configurePreset": "vs2022-x64-cuda",
       "configuration": "Release",
       "output": {
         "outputOnFailure": true
