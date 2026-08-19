@@ -6,5 +6,8 @@ enum class Backend
     Cpu,
 
     // AVX2 implementation, enabled when ENABLE_SIMD is set by CMake.
-    Simd
+    Simd,
+
+    // CUDA implementation, enabled when ENABLE_CUDA is set by CMake.
+    Cuda
 };

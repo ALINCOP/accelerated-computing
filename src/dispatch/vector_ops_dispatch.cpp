@@ -20,6 +20,12 @@ void vector_add(Backend backend,
             vector_add_simd(a, b, out, size);
             return;
 #endif
+
+#ifdef ENABLE_CUDA
+        case Backend::Cuda:
+            vector_add_cuda(a, b, out, size);
+            return;
+#endif
     }
 
     throw std::runtime_error("Selected backend is not available in this build");

@@ -23,3 +23,11 @@ void vector_add_simd(const float* a,
                      float* out,
                      std::size_t size);
 #endif
+
+#ifdef ENABLE_CUDA
+// CUDA implementation using a GPU kernel.
+void vector_add_cuda(const float* a,
+                     const float* b,
+                     float* out,
+                     std::size_t size);
+#endif
